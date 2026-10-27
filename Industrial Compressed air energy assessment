@@ -1,0 +1,74 @@
+clc;
+clear;
+close all;
+
+% INDUSTRIAL COMPRESSED AIR ENERGY ASSESSMENT
+% INPUT VALUES
+power = 15;
+hours = 8;
+days = 300;
+tariff = 8;
+leakage = 15;
+reduction = 30;
+
+% ENERGY CONSUMPTION
+dailyEnergy = power * hours;
+annualEnergy = dailyEnergy * days;
+annualCost = annualEnergy * tariff;
+
+% ESTIMATED ENERGY LOSS
+leakageEnergy = annualEnergy * leakage / 100;
+leakageCost = leakageEnergy * tariff;
+
+% POTENTIAL SAVINGS
+savedEnergy = leakageEnergy * reduction / 100;
+savedCost = savedEnergy * tariff;
+
+newEnergy = annualEnergy - savedEnergy;
+newCost = newEnergy * tariff;
+
+% DISPLAY RESULTS
+fprintf('INDUSTRIAL COMPRESSED AIR ENERGY ASSESSMENT\n');
+fprintf('-------------------------------------------\n');
+fprintf('Daily Energy: %.2f kWh\n', dailyEnergy);
+fprintf('Annual Energy: %.2f kWh\n', annualEnergy);
+fprintf('Annual Cost: Rs. %.2f\n', annualCost);
+fprintf('Estimated Energy Loss: %.2f kWh/year\n', leakageEnergy);
+fprintf('Estimated Loss Cost: Rs. %.2f/year\n', leakageCost);
+fprintf('Potential Energy Savings: %.2f kWh/year\n', savedEnergy);
+fprintf('Potential Cost Savings: Rs. %.2f/year\n', savedCost);
+fprintf('Energy After Savings: %.2f kWh/year\n', newEnergy);
+fprintf('Cost After Savings: Rs. %.2f/year\n', newCost);
+
+% GRAPH 1: ENERGY COMPARISON
+figure;
+bar([annualEnergy newEnergy]);
+set(gca, 'XTickLabel', {'Before Saving', 'After Saving'});
+ylabel('Energy (kWh/year)');
+title('Annual Energy Consumption');
+grid on;
+
+% GRAPH 2: COST COMPARISON
+figure;
+bar([annualCost newCost]);
+set(gca, 'XTickLabel', {'Before Saving', 'After Saving'});
+ylabel('Cost (Rs/year)');
+title('Annual Electricity Cost');
+grid on;
+
+% GRAPH 3: ENERGY LOSS AND SAVINGS
+figure;
+bar([leakageEnergy savedEnergy]);
+set(gca, 'XTickLabel', {'Estimated Loss', 'Potential Savings'});
+ylabel('Energy (kWh/year)');
+title('Energy Loss and Potential Savings');
+grid on;
+
+% RECOMMENDATIONS
+disp(' ');
+disp('ENERGY SAVING RECOMMENDATIONS');
+disp('1. Check and repair compressed air leaks.');
+disp('2. Avoid unnecessarily high air pressure.');
+disp('3. Avoid unnecessary compressor operation.');
+disp('4. Monitor electricity consumption regularly.');
+
